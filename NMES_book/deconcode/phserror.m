@@ -1,0 +1,12 @@
+dt=.002;%time sample size
+t=dt*(0:511)';%t is 512 samples long
+tmax=t(end);%max time
+r=spike(t);%a single impulse in the middle
+fdom=20;%dominant frequency
+[w,tw]=wavemin(dt,fdom,tmax/2);%min phase wavelet
+s=convm(r,w);%trace
+delf=5;%deconf smoother in Hz
+n=round(delf*tmax);%deconf smoother in samples
+stab=0.00001;%mu the stability constant
+[sd,specd]=deconf(s,s,n,stab);%specd is the inverse op spectrum
+sd2=real(ifft(fft(s).*fftshift(conj(specd))));%second result with op phase flipped

@@ -1,0 +1,22 @@
+tgap=0.19;%prediction gap; (seconds)
+td=0.1;%short decon operator (seconds)
+td2=.3;%long decon operator (seconds)
+stab=0.0001;%stability constant
+n=round(td/dt);%short operator length in samples
+n2=round(td2/dt);%long operator length in samples
+ngap=round(tgap/dt);%prediction gap in samples
+fmin=10;fmax=150;%post-decon filter parameters (Hz)
+ncc=40;%number of cc lags to examine
+smd=deconpr(sm,sm,n,1,stab);%spiking deconpr short operator
+smd2=deconpr(sm,sm,n2,1,stab);%spiking deconpr long operator
+smdg=deconpr(sm,sm,n,ngap,stab);%gapped deconpr
+smdgd=deconpr(smdg,smdg,n,1,stab);%spiking deconpr after gapped
+rb=butterband(r,t,fmin,fmax,4,0);%bandlimit the reflectivity
+smdb=butterband(smd,t,fmin,fmax,4,0);%bandlimit spiking short op
+smd2b=butterband(smd2,t,fmin,fmax,4,0);%bandlimit spiking long op
+smdgdb=butterband(smdgd,t,fmin,fmax,4,0);%bandlimit spiking+gapped
+[x,strm]=maxcorr_phs(rb,sm,ncc);%compute cc and phase
+[x,strmdb]=maxcorr_phs(rb,smdb,ncc);%compute cc and phase
+[x,strmd2b]=maxcorr_phs(rb,smd2b,ncc);%compute cc and phase
+[x,strmdg]=maxcorr_phs(rb,smdg,ncc);%compute cc and phase
+[x,strmdgdb]=maxcorr_phs(rb,smdgdb,ncc);%compute cc and phase

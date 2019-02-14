@@ -1,0 +1,10 @@
+[R,f]=fftrl(r,t);
+[S1,f]=fftrl(s1,t);
+[S2,f]=fftrl(s2,t);
+[Wr,fwr]=fftrl(wr,twr);
+[Wm,fwm]=fftrl(wm,twm);
+R=real(todb(R));
+S1=real(todb(S1));
+S2=real(todb(S2));
+Wr=real(todb(Wr));
+Wm=real(todb(Wm));

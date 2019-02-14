@@ -1,0 +1,28 @@
+dx=5;
+afdexample2
+
+%plot the velocity model
+figure
+bigfig
+imagesc(x,z,vel,[vlow vhigh]);colormap(flipud(gray));colorbar
+whitefig;xlabel('meters');ylabel('meters')
+bigfont(gca,4,1);
+
+print -depsc -noui elmiggraphics\afdvmodel2.eps
+
+r=afd_reflect(vel,0);
+seisplot(r,z,x)
+whitefig;xlabel('meters');ylabel('meters')
+axis equal
+bigfont(gca,2,1);
+
+%plot the seismogram
+global ICLIP_VALUE
+ICLIP_VALUE=1;
+seisplot(seisfilt,t,x)
+whitefig;xlabel('meters');ylabel('seconds')
+bigfont(gca,2.5,1);
+brighten(.5)
+
+
+

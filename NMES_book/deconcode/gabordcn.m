@@ -1,0 +1,12 @@
+twin=.3;%Gaussian window width (standard deviation)
+tinc=.05;%spacing between windows
+tsmob=.3;%temporal smoother for boxcar
+fsmob=5;%frequency smoother for boxcar
+stab=0.0001;%Stability factor
+ihyp=0;%flag for no hyperbolic
+sgb=gabordecon(sq,t,twin,tinc,tsmob,fsmob,ihyp,stab);%boxcar smo
+tsmoh=1;%temporal smoother for hyperbolic
+fsmoh=5;%frequency smoother for hyperbolic
+stab=0.0001;%stability factor
+ihyp=1;%flag for hyperbolic
+sgh=gabordecon(sq,t,twin,tinc,tsmob,fsmob,ihyp,stab);%hyperbolic smo

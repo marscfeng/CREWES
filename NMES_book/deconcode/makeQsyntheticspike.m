@@ -1,0 +1,14 @@
+dt=.002;%time sample rate
+tmax=2;%max time for reflectivity
+fdom=20;%dominant frequency of wavelet
+tlen=.5*tmax;%length of wavelet (this is overkill)
+s2n=4;%signal-to-noise ratio
+r=reflec(tmax,dt,.1,3,pi);%change the last argument (currently pi) to any other number to get a different reflectivity
+tmax=2.25;%expand tmax a bit to make room for an isolated spike
+t=(0:dt:tmax)';%make t coordinate
+r=pad_trace(r,t);%pad r with zeros
+ind=near(t,2.1);%spike will be at time 2.1
+r(ind)=.1;%mag of spike
+[w,tw]=wavemin(dt,fdom,tlen);%the wavelet
+s=convm(r,w,0);%convolve
+sn=s+rnoise(s,s2n);%add some noise

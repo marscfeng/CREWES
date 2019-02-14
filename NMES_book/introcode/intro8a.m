@@ -1,0 +1,1 @@
+seis=seis*diag(scales);
